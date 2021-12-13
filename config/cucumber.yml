@@ -1,0 +1,4 @@
+  <% desktop          = "--tags @desktop --require features BROWSER_TILE=true BROWSER_SIZE=1500,1000" %>
+
+  test:               TEST_ENVIRONMENT=TEST
+  chrome:             WEB_BROWSER=chrome  <%= desktop %>

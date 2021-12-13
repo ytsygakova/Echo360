@@ -1,20 +1,21 @@
-require 'selenium/webdriver'
+require 'rubygems'
+require 'selenium-cucumber'
 
-url = "https://#{ENV['TB_KEY']}:#{ENV['TB_SECRET']}@hub.testingbot.com/wd/hub"
+require 'rspec'
 
-capabilities = Selenium::WebDriver::Remote::Capabilities.new
+require 'watir'
+require "page-object"
+require "page-object/page_factory"
 
-capabilities['platform'] = ENV['SELENIUM_PLATFORM'] || 'ANY'
-capabilities['name'] = 'My first Test'
-capabilities['browserName'] = ENV['SELENIUM_BROWSER'] || 'chrome'
-capabilities['version'] = ENV['SELENIUM_VERSION'] if ENV['SELENIUM_VERSION']
+# Before do
+#   $browser = Watir::Browser.new :firefox
+# end
 
-browser = Selenium::WebDriver.for(:remote, :url => url, :desired_capabilities => capabilities)
+$browser_type = ENV['BROWSER'] || 'firefox'
 
-Before do |scenario|
-  @browser = browser
-end
-
-at_exit do
-  browser.quit
+begin
+  $driver = Selenium::WebDriver.for(:"#{$browser_type}")
+rescue Exception => e
+  puts e.message
+  Process.exit(0)
 end
